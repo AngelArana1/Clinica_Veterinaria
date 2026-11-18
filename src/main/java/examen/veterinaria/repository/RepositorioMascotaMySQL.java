@@ -55,4 +55,39 @@ public class RepositorioMascotaMySQL implements RepositorioMascota {
         }
     }
 
+    @Override
+    public void insertar(Mascota mascota) {
+        String sql = "{CALL sp_insertar_mascota(?, ?, ?, ?, ?)}";
+        try (Connection conn = ConexionMySQL.getConnection();
+             CallableStatement cs = conn.prepareCall(sql)) {
+            cs.setString(1, mascota.getCodigo());
+            cs.setString(2, mascota.getNombre());
+            cs.setString(3, mascota.getEspecie().name());
+            cs.setInt(4, mascota.getEdad());
+            cs.setString(5, mascota.getCedulaCliente());
+            cs.executeUpdate();
+        } catch (SQLException e) {
+            throw new PersistenciaException("No se pudo insertar la mascota en MySQL.", e);
+        }
+    }
+
+    @Override
+    public void actualizar(Mascota mascota) {
+        String sql = "{CALL sp_actualizar_mascota(?, ?, ?, ?, ?)}";
+        try (Connection conn = ConexionMySQL.getConnection();
+             CallableStatement cs = conn.prepareCall(sql)) {
+            cs.setString(1, mascota.getCodigo());
+            cs.setString(2, mascota.getNombre());
+            cs.setString(3, mascota.getEspecie().name());
+            cs.setInt(4, mascota.getEdad());
+            cs.setString(5, mascota.getCedulaCliente());
+            cs.executeUpdate();
+        } catch (SQLException e) {
+            throw new PersistenciaException("No se pudo actualizar la mascota en MySQL.", e);
+        }
+    }
+
+
+
+
 }
