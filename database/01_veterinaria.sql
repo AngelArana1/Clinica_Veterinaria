@@ -114,8 +114,6 @@ DELIMITER ;
 DROP USER IF EXISTS 'vet_definer'@'localhost';
 DROP USER IF EXISTS 'vet_app'@'localhost';
 
-CREATE USER 'vet_definer'@'localhost' IDENTIFIED BY '123123qweqwe';
-CREATE USER 'vet_app'@'localhost' IDENTIFIED BY '01032007Angel';
 
 GRANT SELECT, INSERT ON veterinaria.cliente TO 'vet_definer'@'localhost';
 GRANT SELECT, INSERT, UPDATE, DELETE ON veterinaria.mascota TO 'vet_definer'@'localhost';
