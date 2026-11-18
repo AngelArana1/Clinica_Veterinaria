@@ -87,7 +87,15 @@ public class RepositorioMascotaMySQL implements RepositorioMascota {
         }
     }
 
-
-
-
+    @Override
+    public void eliminar(String codigo) {
+        String sql = "{CALL sp_eliminar_mascota(?)}";
+        try (Connection conn = ConexionMySQL.getConnection();
+             CallableStatement cs = conn.prepareCall(sql)) {
+            cs.setString(1, codigo.trim());
+            cs.executeUpdate();
+        } catch (SQLException e) {
+            throw new PersistenciaException("No se pudo eliminar la mascota en MySQL.", e);
+        }
+    }
 }
